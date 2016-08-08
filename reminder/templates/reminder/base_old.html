@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Awhile Since</title>
+        <link rel="stylesheet" href="{% static "css/reminder.css" %}">
+        <link rel="shortcut icon" href="{% static "icon/favicon.ico" %}">
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="{% static "javascript/main.js" %}"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+        <script type="text/javascript">
+            $(document).on("mobileinit", function () {
+                $.mobile.ajaxEnabled = false;
+            });
+        </script>
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+        <link rel="stylesheet" href="https://rawgithub.com/arschmitz/jquery-mobile-datepicker-wrapper/v0.1.1/jquery.mobile.datepicker.css" />
+        <script src="https://rawgithub.com/jquery/jquery-ui/1.10.4/ui/jquery.ui.datepicker.js"></script>
+        <script id="mobile-datepicker" src="https://rawgithub.com/arschmitz/jquery-mobile-datepicker-wrapper/v0.1.1/jquery.mobile.datepicker.js"></script>
+    </head>
+
+    {% block content %}
+    {% endblock %}
+</html>

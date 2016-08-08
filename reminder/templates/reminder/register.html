@@ -1,0 +1,32 @@
+{% extends "reminder/base.html" %}
+
+{% block content %}
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, post-check=0, pre-check=0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+
+    <div data-role="page">
+        <div data-role="header" data-position="inline">
+            <h1>Awhile Since</h1>
+            <a href="#" onclick="goBack()" data-role="button" class="ui-btn-left" data-icon="back">Back</a>
+        </div>
+
+        <div role="main" class="ui-content">
+            {% if registered %}
+            <strong>Thank you for registering!</strong><br><br>
+            You can <a href="/">return to the homepage</a> or go to your <a href="/profile/">profile</a> and start adding some reminders!<br>
+            {% else %}
+            <h1>Register with A While Since</h1>
+            {% load crispy_forms_tags %}
+            <form method="post" action="/register/">
+                {% csrf_token %}
+                {% crispy form %}
+                <br><input type="submit" name="submit" value="Register" />
+            </form>
+            {% endif %}
+        </div>
+
+        <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+            <h4>-- AD GOES HERE --</h4>
+        </div>
+    </div>
+{% endblock content %}

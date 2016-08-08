@@ -1,0 +1,55 @@
+{% extends "reminder/base.html" %}
+
+{% block content %}
+    <div data-role="page" id="pagecategory">
+        <div data-role="header" data-position="inline">
+            <h1>Awhile Since</h1>
+            {% if user.is_authenticated %}
+            <a href="#" onclick="goBack()" data-role="button" class="ui-btn-right" data-icon="back">Back</a>
+            <a href="#menu" data-role="button" class="ui-btn-left" data-icon="user">{% if user.username %}{{ user.username }}{% else %}{{ user.email }}{% endif %}</a>
+            {% else %}
+            <a href="/login/" data-role="button" class="ui-btn-left" data-icon="lock">Login</a>
+            {% endif %}
+        </div>
+
+        <div data-role="panel" data-display="overlay" data-position="left" data-theme="b" id="menu">
+            <ul data-role="listview" data-inset="true">
+                <li data-icon="home"><a href="/profile/">Home</a></li>
+                <li data-icon="plus"><a href="/profile/premade_action">Add Pre-Made Action</a></li>
+                <li data-icon="edit"><a href="/profile/settings/">Settings</a></li>
+                <li data-icon="info"><a href="/aboutus/">About Us</a></li>
+                <li data-icon="gear"><a href="/logout/">Logout</a></li>
+            </ul>
+
+            <div class="panelFooter">Aware Apps LLC 2016</div>
+        </div>
+
+        <div role="main" class="ui-content">
+            <div class="text-center"><strong>Categories (Uncheck any category to delete it)</strong></div>
+            <form method="post" action="/profile/custom_category/">
+                {% csrf_token %}
+
+                {% for category in category_list %}
+                <label>
+                    {% if category.value < 6 %}
+                    <input type="checkbox" value="-1" checked disabled/><div class="align-left">{{ category }}</div>
+                    {% else %}
+                    <input type="hidden" name="custom{{ category.id }}" value="{{ category.id }}" />
+                    <input type="checkbox" name="custom{{ category.id }}" value="-1" checked /><div class="align-left">{{ category }}</div>
+                    {% endif %}
+                </label>
+                {% endfor %}
+
+                <br><div id="div_id_category_custom" class="form-group">
+                    <label for="id_category_custom">Add Custom Category Name</label>
+                    <input id="id_category_custom" maxlength="40" name="category_custom" type="text" class="form-control" placeholder="Custom">
+                </div>
+                <input id="catSave" class="btn btn-primary" data-icon="plus" type="submit" disabled="disabled" value="Save" name="submit"/>
+            </form>
+        </div>
+
+        <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+            <h4>-- AD GOES HERE --</h4>
+        </div>
+    </div>
+{% endblock %}

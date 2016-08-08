@@ -1,0 +1,90 @@
+                    <div id="div_id_name">
+                        <label for="id_name">Name*</label>
+                        <input id="id_name" maxlength="50" name="name" type="text" placeholder="Name" disabled>
+                    </div>
+
+                    <div data-role="fieldcontain"  id="div_radio" class="radiogroup">
+                        <fieldset data-role="controlgroup" data-type="horizontal">
+                            <legend>How should the action item be monitored?*</legend>
+                                <input type="radio" name="radio-choice" id="id_choice_smartTRACK" value="1" checked="checked" disabled/>
+                                <label for="id_choice_smartTRACK">SmartTRACK</label>
+
+                                <input type="radio" name="radio-choice" id="id_choice_date" value="2" disabled/>
+                                <label for="id_choice_date">Date</label>
+
+                                <input type="radio" name="radio-choice" id="id_choice_frequency" value="3" disabled/>
+                                <label for="id_choice_frequency">Frequency</label>
+                        </fieldset>
+                    </div>
+
+                    <div id="div_choice_date" style="display: none;">
+                        <div id="div_id_due_date">
+                            <label for="id_due_date">Date*</label>
+                            <input type="text" id="id_due_date" name="due_date" data-role="date" data-inline="true" placeholder="Date" disabled>
+                        </div>
+                        <div id="div_id_due_time">
+                            <label for="id_due_time">Time*</label>
+                            <select id="id_due_time" name="due_time" disabled>
+                                <option value="0">12:00 AM</option>
+                                <option value="1">1:00 AM</option>
+                                <option value="2">2:00 AM</option>
+                                <option value="3">3:00 AM</option>
+                                <option value="4">4:00 AM</option>
+                                <option value="5">5:00 AM</option>
+                                <option value="6">6:00 AM</option>
+                                <option value="7">7:00 AM</option>
+                                <option value="8">8:00 AM</option>
+                                <option value="9">9:00 AM</option>
+                                <option value="10">10:00 AM</option>
+                                <option value="11">11:00 AM</option>
+                                <option value="12" selected='selected'>12:00 PM</option>
+                                <option value="13">1:00 PM</option>
+                                <option value="14">2:00 PM</option>
+                                <option value="15">3:00 PM</option>
+                                <option value="16">4:00 PM</option>
+                                <option value="17">5:00 PM</option>
+                                <option value="18">6:00 PM</option>
+                                <option value="19">7:00 PM</option>
+                                <option value="20">8:00 PM</option>
+                                <option value="21">9:00 PM</option>
+                                <option value="22">10:00 PM</option>
+                                <option value="23">11:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="div_choice_frequency" style="display: none;">
+                        <div id="div_id_frequency_int">
+                            <label for="id_frequency_int">Once Every*</label>
+                            <input id="id_frequency_int" min="1" name="frequency_int" type="number" placeholder="Once Every" onkeypress="return isNumber(event)" disabled>
+                        </div>
+                        <div id="div_id_frequency_choice">
+                            <label for="id_frequency_choice">Frequency*</label>
+                            <select id="id_frequency_choice" name="frequency_choice" disabled>
+                                <option value="1">Hour(s)</option>
+                                <option value="2" selected='selected'>Day(s)</option>
+                                <option value="3">Week(s)</option>
+                                <option value="4">Month(s)</option>
+                                <option value="5">Year(s)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="div_id_importance">
+                        <label for="id_importance">Importance</label>
+                        <select id="id_importance" name="importance" disabled>
+                            <option value="1">Trivial</option>
+                            <option value="2">Minor</option>
+                            <option value="3" selected='selected'>Moderate</option>
+                            <option value="4">Significant</option>
+                            <option value="5">Critical</option>
+                        </select>
+                    </div>
+
+                    <div id="div_id_category">
+                        <label for="id_category">Category*</label>
+                        <select id="id_category" name="category" disabled>
+                            {% for category in category_list %}<option value="{{ category.value }}"{% if category.name == 'General' %} selected='selected'{% endif %}>{{ category }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>

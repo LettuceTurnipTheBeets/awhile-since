@@ -1,0 +1,49 @@
+{% extends "reminder/base.html" %}
+
+{% block content %}
+    <script>
+    var width = parseInt(window.innerWidth * .8);
+    </script>
+    <body>
+    <div data-role="page" id="pagehome">
+
+        {% if user.is_authenticated %}
+        <div data-role="panel" data-display="overlay" data-position="left" data-theme="b" id="menu">
+            <ul data-role="listview" data-inset="true">
+                <li data-icon="home"><a href="/profile/">Home</a></li>
+                <li data-icon="bars"><a href="/">Group Action</a></li>
+                <li data-icon="edit"><a href="/profile/settings/">Settings</a></li>
+                <li data-icon="info"><a href="/aboutus/">About Us</a></li>
+                <li data-icon="gear"><a href="/logout/">Logout</a></li>
+            </ul>
+
+            <div class="panelFooter">Aware Apps LLC 2016</div>
+        </div>
+        {% endif %}
+
+        <div data-role="header" data-position="inline">
+            <h1>Awhile Since</h1>
+            {% if user.is_authenticated %}
+            <a href="#menu" data-role="button" class="ui-btn-left" data-icon="user">{% if user.username %}{{ user.username }}{% else %}{{ user.email }}{% endif %}</a>
+            {% else %}
+            <a href="/login/" data-role="button" class="ui-btn-left" data-icon="lock">Login</a>
+            {% endif %}
+        </div>
+
+        <div role="main" class="ui-content">
+            {% for task in template.all %}
+                <!-- Image Caption {{ forloop.counter }} -->
+                <div id="{{ forloop.counter0 }}-{{ task.id }}" class="box">
+                            <span id="{{ forloop.counter0 }}" class="caption scale-caption">
+                            <h3>{{ task.name }}</h3>
+                        </span></a>
+                </div><br><br><br><br><br><br>
+            {% endfor %}
+	    </div>
+
+        <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+            <h4>-- AD GOES HERE --</h4>
+        </div>
+    </div>
+    </body>
+{% endblock content %}

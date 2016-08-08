@@ -1,0 +1,164 @@
+{% extends "reminder/base.html" %}
+
+{% block content %}
+    <script>
+        <!-- Global Variables -->
+        var today = new Date();
+        var offset = today.getTimezoneOffset();
+        var task_count = {{ user.task_set.count }};
+        var score = {{ user.userprofile.score }};
+        var past_due = [{% for task in object_list %}1,{% endfor %}];
+        var due_date = [{% for task in object_list %}new Date({{ task.due_date.year }}, {{ task.due_date.month }} - 1, {{ task.due_date.day }}, {{ task.due_date.hour }}, {{ task.due_date.minute }} - offset),{% endfor %}];
+        var tracking = [{% for task in object_list %}{% if task.en_smartTRACK == 1 %}1,{% else %}0,{% endif %}{% endfor %}];
+    </script>
+
+    <body onload="profileInit()">
+    <div data-role="page" id="pageone">
+
+        <div data-role="header" data-position="inline">
+            <h1>Awhile Since</h1>
+            {% if user.is_authenticated %}
+            <a href="/profile/" data-role="button" class="ui-btn-right" data-icon="star"><div id='score' class='align-right'><b> {{ user.userprofile.score }}</b></div></a>
+            <a href="#menu" data-role="button" class="ui-btn-left" data-icon="user">{% if user.username %}{{ user.username }}{% else %}{{ user.email }}{% endif %}</a>
+            {% else %}
+            <a href="/login/" data-role="button" class="ui-btn-left" data-icon="lock">Login</a>
+            {% endif %}
+        </div>
+
+        <div id="menu" data-role="panel" data-display="overlay" data-position="left" data-theme="b">
+            <ul data-role="listview" data-inset="true">
+                <li data-icon="plus"><a href="/profile/premade_action">Add Pre-Made Action</a></li>
+                <li data-icon="plus"><a href="/profile/custom_category">Add Custom Category</a></li>
+                <li data-icon="edit"><a href="/profile/settings/">Settings</a></li>
+                <li data-icon="info"><a href="/aboutus/">About Us</a></li>
+                <li data-icon="gear"><a href="/logout/">Logout</a></li>
+            </ul>
+
+            <div class="panelFooter">Aware Apps LLC 2016</div>
+        </div>
+
+        <div role="main" class="ui-content">
+            <a href="#taskModal" data-rel="popup" data-position-to="window" data-transition="pop" data-role="button" class="ui-btn ui-icon-plus ui-btn-icon-left">Add New Action&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><br>
+
+            {% load reminder_extras %}
+
+            {% for category in main_category %}
+            <div id="category{{ forloop.counter0 }}" data-role="collapsible" data-inset="false" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d"{% if category.0 == new_category %} data-collapsed="false"{% endif %}>
+                <h1><div class="ui-li-count">{{ category.1 }}</div>{{ category.0 }}</h1>
+                <ul id="list{{ forloop.counter0 }}" data-role="listview">
+                    {% with loop_val=forloop.counter0 %}
+                    {% with final_list=slice_list|lookup:loop_val %}
+                    {% for obj in object_list|slice:final_list %}
+                    <li class="task-class">
+                        <a id="link{% total_count forloop.counter0 forloop.parentloop.counter0 slice_list %}-{{ forloop.parentloop.counter0 }}-{{ obj.id }}k" href="#">
+                            <div class="link-header">
+                                {{ obj.name }}
+                            </div>
+                        </a>
+                    </li>
+                    {% endfor %}
+                    {% endwith %}
+                    {% endwith %}
+                </ul>
+            </div>
+            {% empty %}
+                You should make a new action!
+            {% endfor %}
+
+            <div data-role="popup" id="taskModal" data-dismissible="false">
+                <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+                <div data-role="header" data-theme="a">
+                    <div id="modalTitle">Add Action</div>
+                    <div id="modalId" style="display: none;"></div>
+                </div>
+                <div role="main" class="ui-content">
+                    {% csrf_token %}
+                    <form id="taskForm">
+                        {%  include "forms/task.html" %}
+                    </form>
+
+                    <fieldset class="ui-grid-a">
+                        <div class="ui-block-a"><input id="taskSave" class="btn btn-primary" data-icon="plus" type="button" disabled="disabled" value="Add" name="submit"/></div>
+                        <div class="ui-block-b"><input id="addCancel" name="cancel" class="btn btn-default" data-dismiss="modal" type="button" value="Cancel"/></div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div data-role="popup" id="ackModal" data-dismissible="false">
+                <div data-role="header" data-theme="a">
+                    <div id="ackTitle">Acknowledge Task Default Header</div>
+                    <div id="ackId" style="display: none;"></div>
+                </div>
+                <div role="main" class="ui-content">
+                    {% csrf_token %}
+                    <div class="ui-grid-a">
+                        <div class="ui-block-a text-right"><b>Current Time:&nbsp;</b></div>
+                        <div id="ackTime" class="ui-block-b"></div><br>
+                        <div class="ui-block-a text-right"><b>Due Date:&nbsp;</b></div>
+                        <div id="ackDue" class="ui-block-b"></div>
+                        <div class="ui-block-a text-right"><b>Last Acknowledged:&nbsp;</b></div>
+                        <div id="ackLast" class="ui-block-b"></div>
+                    </div>
+                    <div id="div_id_omit">
+                        <label>
+                            <input id="id_omit" type="checkbox" name="omit">Omit from SmartTRACKing?
+                        </label>
+                    </div>
+
+                    <fieldset class="ui-grid-a">
+                        <div class="ui-block-a"><input id="ackSave" class="btn btn-primary" data-icon="check" type="button" value="Yes" name="submit"/></div>
+                        <div class="ui-block-b"><input id="ackCancel" name="cancel" class="btn btn-default" data-icon="delete" data-dismiss="modal" type="button" value="No"/></div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div data-role="popup" id="statModal" data-dismissible="false">
+                <div data-role="header" data-theme="a">
+                    <div id="statTitle">Stats Default Header</div>
+                    <div id="statId" style="display: none;"></div>
+                </div>
+                <div role="main" class="ui-content">
+                    {% csrf_token %}
+                    <div class="ui-grid-a">
+                        <div class="ui-block-a text-right"><b>Total Acknowledges:&nbsp;</b></div>
+                        <div id="statTotal" class="ui-block-b"></div><br>
+                        <div class="ui-block-a text-right"><b>Created Date:&nbsp;</b></div>
+                        <div id="statCreated" class="ui-block-b"></div>
+                        <div class="ui-block-a text-right"><b>Last Acknowledged:&nbsp;</b></div>
+                        <div id="statLast" class="ui-block-b"></div>
+                        <div class="ui-block-a text-right bold"><b>Due Date:&nbsp;</b></div>
+                        <div id="statDue" class="ui-block-b"></div>
+                        <div class="ui-block-a text-right"><b>Tracking Mode:&nbsp;</b></div>
+                        <div id="statTrack" class="ui-block-b"></div>
+                        <div class="ui-block-a text-right"><b>Frequency:&nbsp;</b></div>
+                        <div id="statFrequency" class="ui-block-b"></div>
+                        <div class="ui-block-a text-right"><b>Time Remaining:&nbsp;</b></div>
+                        <div id="statTime" class="ui-block-b bold"></div>
+                    </div>
+
+                    <fieldset class="ui-grid-a">
+                        <div class="ui-block-a"><input id="statEdit" class="btn btn-primary" data-icon="search" type="button" value="Edit" name="submit"/></div>
+                        <div class="ui-block-b"><input id="statCancel" name="cancel" class="btn btn-default" data-icon="delete" data-dismiss="modal" type="button" value="Cancel"/></div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+            <h4>-- AD GOES HERE --</h4>
+        </div>
+
+    </div>
+    </body>
+
+{% endblock %}
+
+
+ 
+
+
+
+
+
+
+

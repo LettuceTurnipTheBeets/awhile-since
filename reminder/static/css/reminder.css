@@ -1,0 +1,130 @@
+.align-left {
+    float: left;
+}
+
+.align-right {
+    float: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.ui-popup-container, .ui-popup {
+    width: 98%;
+    position: absolute;
+    top: 10px;
+    left: 0;
+}
+
+#menu {
+    background-color: #595959;
+}
+
+.panelFooter {
+    position: absolute;
+    bottom: 1em;
+    height: 1em;
+    width: 100%;
+    text-align: center;
+}
+
+.inline, .header, .inline-bottom, .header-bottom  {
+    font-size: 14px !important;
+}
+
+.ui-block-a, .ui-block-b, .ui-block-c {
+    padding: 30px;
+}
+
+.task-class {
+
+}
+
+#modalTitle, #ackTitle, #statTitle {
+    font-size: 18px !important;
+    text-align: center;
+}
+
+.float-right {
+    float: right;
+}
+
+.ui-grid-a {
+    margin-left: -16px !important;
+    margin-right: -12px !important;
+}
+
+.ui-block-a, .ui-block-b {
+    margin-top: 10px !important;
+}
+
+.warning, .warning-cat {
+    background: #e5e619 !important;
+    text-shadow: none !important;
+}
+
+.warning:hover {
+    background: #cfcf17 !important;
+}
+
+.alarm, .alarm-cat {
+    background: #ff3333 !important;
+    text-shadow: none !important;
+}
+
+.alarm:hover {
+    background: #ff1a1a !important;
+}
+
+.ui-radio {
+    text-align: center !important;
+}
+
+.ui-radio label {
+    padding: 12px !important;
+}
+
+.ui-popup-container, .ui-popup {
+    width: 100%;
+}
+
+.error {
+    /**display:table-cell;
+    empty-cells:hide;
+    padding: 2px;**/
+	border-radius: 5px;
+    border: 2px solid red;
+}
+
+.link-header {
+    font-size: 16px !important;
+    margin-top: 5px !important;
+}
+
+.test-set {
+    background-color: #E6E6E6 !important;
+}
+
+.ul2 {
+    width: 70%;
+    margin: auto;
+
+}
+
+.custom_ul {
+    display: table;
+    margin: 0 auto;
+}
+
+.bold {
+    font-weight: bold;
+}

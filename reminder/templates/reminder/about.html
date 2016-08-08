@@ -1,0 +1,53 @@
+{% extends "reminder/base.html" %}
+
+{% block content %}
+    <div data-role="page" id="pageabout">
+        <div data-role="header" data-position="inline">
+            <h1>Awhile Since</h1>
+            {% if user.is_authenticated %}
+            <a href="#" onclick="goBack()" data-role="button" class="ui-btn-right" data-icon="back">Back</a>
+            <a href="#menu" data-role="button" class="ui-btn-left" data-icon="user">{% if user.username %}{{ user.username }}{% else %}{{ user.email }}{% endif %}</a>
+            {% else %}
+            <a href="/login/" data-role="button" class="ui-btn-left" data-icon="lock">Login</a>
+            {% endif %}
+        </div>
+
+        {% if user.is_authenticated %}
+        <div data-role="panel" data-display="overlay" data-position="left" data-theme="b" id="menu">
+            <ul data-role="listview" data-inset="true">
+                <li data-icon="home"><a href="/profile/">Home</a></li>
+                <li data-icon="plus"><a href="/profile/premade_action">Add Pre-Made Action</a></li>
+                <li data-icon="plus"><a href="/profile/custom_category">Add Custom Category</a></li>
+                <li data-icon="edit"><a href="/profile/settings/">Settings</a></li>
+                <li data-icon="gear"><a href="/logout/">Logout</a></li>
+            </ul>
+
+            <div class="panelFooter">Aware Apps LLC 2016</div>
+        </div>
+        {% endif %}
+        <div role="main" class="ui-content">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The idea for 'Awhile Since' was tumbling around the mind of Roop Bassi since 2011.  He had been very interested in improving himself and increasing his quality
+            of life so he enjoyed apps and websites that helped you do that.  He noticed that he was happiest when he had a routine filled with activities he
+            genuinely enjoyed doing, but he was very busy and would often forget to do the things (even the simple things) that made him happy.  He wanted an
+            easy way to be reminded of these activities, whether it be something like taking a medication, having sushi, or going skydiving.<br><br>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;He envisioned a website to help out with all of this as well as introduce him to new activities and to see what activities other people want.  He
+            met up software developer Marty Corbett who developed the site and helped to bring his vision to life.<br><br>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Roop enjoys long walks on the beach, playing spike ball, movies in the park, and hosts segway tours in his free time.  He is truly one of the best
+            people you could hope to meet.  Feel free to contact him with feedback about your experience on the site as well as suggestions for ways to make it better.
+            <div class="text-center">
+                <a href="mailto:roop.bassi@gmail.com?Subject=Feedback%20about%20your%20site" target="_top">Contact Roop</a><br><br>
+            </div>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Marty loves to cook, play golf, learn Italian.  Feel free to contact him with feedback about the technical operation of the site or bug reports.
+            <div class="text-center">
+                <a href="mailto:corbe054@umn.edu?Subject=Feedback%20about%20your%20site" target="_top">Contact Marty</a>
+            </div>
+        </div>
+
+        <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+            <h4>-- AD GOES HERE --</h4>
+        </div>
+    </div>
+{% endblock %}

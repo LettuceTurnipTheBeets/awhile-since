@@ -1,0 +1,62 @@
+{% extends "reminder/base.html" %}
+
+{% block content %}
+    <div data-role="page" id="pagepremade">
+        <div data-role="header" data-position="inline">
+            <h1>Awhile Since</h1>
+            {% if user.is_authenticated %}
+            <a href="#" onclick="goBack()" data-role="button" class="ui-btn-right" data-icon="back">Back</a>
+            <a href="#menu" data-role="button" class="ui-btn-left" data-icon="user">{% if user.username %}{{ user.username }}{% else %}{{ user.email }}{% endif %}</a>
+            {% else %}
+            <a href="/login/" data-role="button" class="ui-btn-left" data-icon="lock">Login</a>
+            {% endif %}
+        </div>
+
+        <div data-role="panel" data-display="overlay" data-position="left" data-theme="b" id="menu">
+            <ul data-role="listview" data-inset="true">
+                <li data-icon="home"><a href="/profile/">Home</a></li>
+                <li data-icon="plus"><a href="/profile/custom_category">Add Custom Category</a></li>
+                <li data-icon="edit"><a href="/profile/settings/">Settings</a></li>
+                <li data-icon="info"><a href="/aboutus/">About Us</a></li>
+                <li data-icon="gear"><a href="/logout/">Logout</a></li>
+            </ul>
+
+            <div class="panelFooter">Aware Apps LLC 2016</div>
+        </div>
+
+        <div role="main" class="ui-content">
+
+            <form method="post" action="/profile/premade_action/">
+                {% csrf_token %}
+                <div id="div_id_task_category">
+                    <label for="id_task_category">Choose from a Pre-made Action*</label>
+                    <select id="id_task_category" name="task_category">
+                        <option value="1" selected='selected'>General</option>
+                        <option value="2">Hygiene/Fitness</option>
+                        <option value="3">Maintenance</option>
+                        <option value="4">School/Business</option>
+                        <option value="5">Social</option>
+                    </select>
+                </div>
+
+                <div id="div_id_task_name">
+                    <label for="id_task_name">Pre-made Action*</label>
+                    <select id="id_task_name" name="task_name" data-native-menu="false">
+                        {% for category in category_general %}<option value="{{ forloop.counter }}">{{ category }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                {%  include "forms/premade.html" %}
+                <input id="premadeId" type="password" style="display:none" name="task_id" value="mypassword">
+                <input id="premadeSave" class="btn btn-primary" data-icon="plus" type="submit" disabled="disabled" value="Add action to profile" name="submit"/>
+            </form>
+
+
+        </div>
+
+        <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+            <h4>-- AD GOES HERE --</h4>
+        </div>
+    </div>
+{% endblock %}

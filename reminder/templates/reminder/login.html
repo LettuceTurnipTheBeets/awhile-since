@@ -1,0 +1,39 @@
+{% extends "reminder/base.html" %}
+
+{% block content %}
+    <div data-role="page">
+        <div data-role="header" data-position="inline">
+            <h1>Awhile Since</h1>
+            <a href="#" onclick="goBack()" data-role="button" class="ui-btn-left" data-icon="back">Back</a>
+        </div>
+
+        <div data-role="main" class="ui-content">
+            {% if feedback %}
+            <ul>
+                <li><p>{{ feedback }}</p></li>
+            </ul>
+            {% endif %}
+
+            <form id="check-user" class="ui-body ui-body-a ui-corner-all" data-ajax="false" method="post" action="/login/">
+                {% csrf_token %}
+                <fieldset>
+                    <div data-role="fieldcontain">
+                        <label for="username">Username:</label>
+                        <input type="text" value="" name="username" id="username"/>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="password">Password:</label>
+                        <input type="password" value="" name="password" id="password"/>
+                    </div>
+                    <input type="submit" data-theme="b" name="submit" id="submit" value="Log In">
+                </fieldset>
+            </form>
+
+            <h4 class="text-center">Or <a href="/register/">register here</a> so you can join this delightful site!</h4>
+        </div>
+
+        <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+            <h4>-- AD GOES HERE --</h4>
+        </div>
+    </div>
+{% endblock content %}
