@@ -1,4 +1,0 @@
-What to test:
-
-Datetime fields only store datetime objects
-Datetime fields don't allow storing a due date in the past
