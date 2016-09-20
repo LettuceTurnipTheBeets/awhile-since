@@ -128,3 +128,35 @@
 .bold {
     font-weight: bold;
 }
+
+.ui-block-a, .ui-block-b, .ui-block-c {
+    height: 100px;
+    font-weight: bold;
+    text-align: center !important;
+    padding: 30px !important;
+}
+
+.important1 {
+    background-color: lightblue;
+    border: 2px solid darkblue !important;
+}
+
+.important2 {
+    background-color: lightgreen;
+    border: 2px solid darkgreen !important;
+}
+
+.important3 {
+    background-color: yellow;
+    border: 2px solid dimgray !important;
+}
+
+.important4 {
+    background-color: orange;
+    border: 2px solid brown !important;
+}
+
+.important5 {
+    background-color: palevioletred;
+    border: 2px solid black !important;
+}

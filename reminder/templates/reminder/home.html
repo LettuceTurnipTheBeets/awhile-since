@@ -31,15 +31,14 @@
         </div>
 
         <div role="main" class="ui-content">
-            {% for task in template.all %}
-                <!-- Image Caption {{ forloop.counter }} -->
-                <div id="{{ forloop.counter0 }}-{{ task.id }}" class="box">
-                            <span id="{{ forloop.counter0 }}" class="caption scale-caption">
-                            <h3>{{ task.name }}</h3>
-                        </span></a>
-                </div><br><br><br><br><br><br>
-            {% endfor %}
+            <div class="ui-grid-b ui-responsive">
+                {% for task in template.all %}
+                <div class="ui-block-{% if forloop.counter0 == "0" %}a{% elif forloop.counter0|divisibleby:"3" %}a{% else %}b{% endif %} important{{ task.importance }}"><span>{{ task.name }}</span></div>
+                {% endfor %}
+            </div>
 	    </div>
+
+
 
         <div data-role="footer" data-position="fixed" data-tap-toggle="false">
             <h4>-- AD GOES HERE --</h4>

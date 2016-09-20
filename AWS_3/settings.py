@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'crispy_forms',
     'reminder',
     'captcha',
+    'djcelery'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -130,3 +131,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR,  'templates'),
 )
+
+CELERY_RESULT_BACKEND='djcelery.backends.cache:CacheBackend'
