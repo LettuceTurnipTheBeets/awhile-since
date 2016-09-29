@@ -113,7 +113,7 @@ class Task(models.Model):
                     if days == 0:
                         days = ''
                     elif days == 1:
-                        if weeks != 0:
+                        if weeks != 0 or days != 0:
                             days = '{} day{}'.format(days, days_comma)
                         else:
                             days = 'day{}'.format(days_comma)
@@ -123,7 +123,10 @@ class Task(models.Model):
                     if weeks == 0:
                         weeks = ''
                     elif weeks == 1:
-                        weeks = 'week{}'.format(weeks_comma)
+                        if days != 0 or hours != 0:
+                            weeks = '{} week{}'.format(weeks, weeks_comma)
+                        else:
+                            weeks = 'week{}'.format(weeks_comma)
                     else:
                         weeks = '{} weeks{}'.format(weeks, weeks_comma)
 
