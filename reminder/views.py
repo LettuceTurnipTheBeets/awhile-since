@@ -17,6 +17,9 @@ import datetime
 from dateutil.relativedelta import relativedelta
 import math
 import pytz
+from django.core.mail import send_mail
+from django.conf import settings
+
 
 
 # Home Page.  Display a brief message.  Should  be changed to an info page with sample task names/list
@@ -903,7 +906,7 @@ def form_name(request):
 
 # Profile Settings Page.  Display settings form and allow form saving.
 @login_required
-def settings(request):
+def profile_settings(request):
     print('\n***Settings Requested***')
     settings_list = []
     object_list = request.user.task_set.all().order_by('name')
@@ -967,6 +970,16 @@ def register(request):
 
             # update the variable to tell the template registration was successful and log the user in
             registered = True
+
+            # Send an email
+            # send_mail(subject, message, from_email, to_list, fail_silently=True)
+            subject = 'Thanks for registering with AwhileSince, {}'.format(user.username)
+            message = 'To start enjoying all that AwhileSince has to offer simply login and get started.<nrhttp://www.AwhileSince.com/login'
+            from_email = settings.EMAIL_HOST_USER
+            to_list = [user.email, settings.EMAIL_HOST_USER]
+
+            send_mail(subject, message, from_email, to_list, fail_silently=False)
+
             login(request, authenticate(username=request.POST['username'], password=request.POST['password']))
         else:
             print('Form Errors: {}'.format(form.errors))

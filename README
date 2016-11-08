@@ -25,6 +25,8 @@ Project Settings:
      - Rabbitmq (http://www.rabbitmq.com/)
      - Celery 3.1.23 (http://docs.celeryproject.org/en/latest/index.html)
      - Django-Celery 3.1.17
+     - Redis 2.10.5
+     - Redis-Server
 
 Environment Settings:
      - Ubuntu 16.04
