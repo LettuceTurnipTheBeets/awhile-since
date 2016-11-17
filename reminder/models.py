@@ -44,6 +44,7 @@ class Task(models.Model):
     time_delta = models.FloatField(default=0.0)
     choice = models.IntegerField(default=0)  # 0 = smartTRACK, 1 = date, 2 = frequency
     acknowledge_total = models.IntegerField(default=0)
+    notified = models.BooleanField(default=False)
 
     # smartTRACK Settings
     en_smartTRACK = models.IntegerField(default=0)  # 0 = disabled, 1 = enabled but tracking not ready, 2 = enabled and tracking ready

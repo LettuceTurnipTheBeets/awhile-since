@@ -25,7 +25,7 @@ from django.conf import settings
 # Home Page.  Display a brief message.  Should  be changed to an info page with sample task names/list
 def home(request):
     print('\n***Home Requested***')
-    template = Task.objects.all().order_by('?')[:9]
+    template = Task.objects.all().order_by('?').filter(Q(user_id=1))[:9]
 
     return render(request, 'reminder/home.html', {'template': template})
 
@@ -269,6 +269,7 @@ def acknowledge(request):
                 task.due_date = formatted_time + relativedelta(months=freq_int * 12)
 
         task.acknowledge_total += 1
+        task.notified = False
 
         score = int(math.sqrt(duration) * (((task.importance * task.importance) / 50) + 1))
 
