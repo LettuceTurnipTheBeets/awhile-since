@@ -15,7 +15,8 @@
 
         <div data-role="panel" data-display="overlay" data-position="left" data-theme="b" id="menu">
             <ul data-role="listview" data-inset="true">
-                <li data-icon="home"><a href="/profile/">Home</a></li>
+                <li data-icon="home"><a href="/">Home</a></li>
+                <li data-icon="bars"><a href="/profile/">Profile</a></li>
                 <li data-icon="plus"><a href="/profile/premade_action">Add Pre-Made Action</a></li>
                 <li data-icon="plus"><a href="/profile/custom_category">Add Custom Category</a></li>
                 <li data-icon="info"><a href="/aboutus/">About Us</a></li>
@@ -36,7 +37,7 @@
                 <label for="id_last_name">Last Name:</label>
                 <input id="id_last_name" maxlength="40" name="last_name" type="text" placeholder="Last Name" value="{{ user.last_name }}">
                 <br><label>
-                    <input type="checkbox" name="push" {% if user.userprofile.en_notifications %}checked{% endif %}>Allow your phone to receive push notifications?
+                    <input type="checkbox" name="push" {% if user.userprofile.en_notifications %}checked{% endif %}>Allow notifications via email?
                 </label>
 
                 <br><div class="text-center"><strong>Actions (Uncheck any action to delete it)</strong></div>
