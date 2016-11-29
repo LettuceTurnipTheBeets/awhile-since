@@ -25,7 +25,8 @@ from django.conf import settings
 # Home Page.  Display a brief message.  Should  be changed to an info page with sample task names/list
 def home(request):
     print('\n***Home Requested***')
-    template = Task.objects.all().order_by('?').filter(Q(user_id=1))[:9]
+    # template = Task.objects.all().order_by('?').filter(user_id=1)[:9]
+    template = Task.objects.all().filter(user_id__gt=1).order_by('?')[:9]
 
     return render(request, 'reminder/home.html', {'template': template})
 
