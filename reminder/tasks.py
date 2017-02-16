@@ -20,7 +20,7 @@ logger = get_task_logger(__name__)
 )
 def send_warning_email_task():
     print('***Send Warning Email Task started at {}'.format(timezone.now()))
-    for email_task in Task.objects.all().filter(Q(user_id=1)): # may have to exclude tasks where user_id == 1  
+    for email_task in Task.objects.all().filter(Q(user_id=1)): # may have to exclude tasks where user_id == 1
         if((timezone.now() - email_task.due_date) < 86400) and (email_task.time_delta > 86400):
             if not email_task.notified:
                 email_task.notified = True

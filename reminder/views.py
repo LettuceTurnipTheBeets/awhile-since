@@ -402,7 +402,7 @@ def delete_task(request):
     return JsonResponse(response)
 
 
-# Create Task function.  Called when the ajax modal form is saved.
+# Create Task function.  Called when ajax modal form is saved.
 def create_task(request):
     print('\n***Create_Task Requested***')
     # elapsed = timezone.now()
