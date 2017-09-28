@@ -1,0 +1,4 @@
+*.pyc
+settings_secret.py
+AWS_3/__pycache__
+Reminder/__pycache__
