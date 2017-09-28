@@ -2,4 +2,6 @@
 settings_secret.py
 AWS_3/__pycache__
 Reminder/__pycache__
+Reminder/migrations/__pycache__
+Reminder/templatetags/__pycache__
 .idea
