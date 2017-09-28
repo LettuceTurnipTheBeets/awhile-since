@@ -11,24 +11,24 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from settings_secret import *
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Email Settings
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'awhilesince@gmail.com'
-EMAIL_HOST_PASSWORD = '+DFcm8xx'
-EMAIL_PORT = 587
+EMAIL_USE_TLS = E_USE_TLS
+EMAIL_HOST = E_HOST
+EMAIL_HOST_USER = E_HOST_USER
+EMAIL_HOST_PASSWORD = E_HOST_PASSWORD
+EMAIL_PORT = E_PORT
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '2ayb6u*h7nwe@5(o_whj-y*!icho6p=mo#tz&6*xy7u#tho2yo'
-
+SECRET_KEY = SECRET
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -85,25 +85,9 @@ WSGI_APPLICATION = 'AWS_3.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-''' Old SQLite Database
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}'''
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'aws_db',
-        'USER': 'root',
-        'PASSWORD': 'root2416',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
+    'default': MYSQL_DATABASE
 }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
