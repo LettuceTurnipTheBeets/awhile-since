@@ -1,9 +1,4 @@
-# located /var/nginx/sites-available/awhile-since
-server {
-    server_name "~^(?!www\.).*" ;
-    return 301 $scheme://www.$host$request_uri;
-}
-
+# located /etc/nginx/sites-available/awhile-since
 server {
     listen 80;
     server_name awhile-since.com www.awhile-since.com;    
