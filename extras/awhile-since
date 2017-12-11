@@ -1,0 +1,27 @@
+# located /var/nginx/sites-available/awhile-since
+server {
+    server_name "~^(?!www\.).*" ;
+    return 301 $scheme://www.$host$request_uri;
+}
+
+server {
+    listen 80;
+    server_name awhile-since.com www.awhile-since.com;    
+
+    access_log /var/log/nginx/awhile-since/access.log;
+    error_log /var/log/nginx/awhile-since/error.log;
+
+    location = /favicon.ico {
+        access_log off;
+        log_not_found off;
+    }
+    
+    location /static/ {
+        root /home/corbe054/awhile-since/reminder;
+    }
+
+    location / {
+        include         uwsgi_params;
+        uwsgi_pass      unix:/run/uwsgi/awhile-since.sock;
+    }    
+}
