@@ -34,5 +34,4 @@ This repository is for the AWS_3 project.  This is a productivity/scheduling app
  +   Ubuntu 16.04
  +   Apache 2.4.18
  +   MySQL 5.7.13
- +   Changed my version control software from TortoiseSVN (which backed up to a network hard drive) to Git (which backs up to https://www.Github.LettuceTurnipTheBeets/awhile-since)
 

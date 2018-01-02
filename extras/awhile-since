@@ -1,10 +1,10 @@
 # located /etc/nginx/sites-available/awhile-since
 server {
     listen 80;
-    server_name awhile-since.com www.awhile-since.com;    
+    server_name awhilesince.com www.awhilesince.com;    
 
-    access_log /var/log/nginx/awhile-since/access.log;
-    error_log /var/log/nginx/awhile-since/error.log;
+    access_log /var/log/awhile-since/nginx_access.log;
+    error_log /var/log/awhile-since/nginx_error.log;
 
     location = /favicon.ico {
         access_log off;
@@ -17,6 +17,6 @@ server {
 
     location / {
         include         uwsgi_params;
-        uwsgi_pass      unix:/run/uwsgi/awhile-since.sock;
+        uwsgi_pass      unix:/uwsgi-sockets/awhile-since.sock;
     }    
 }

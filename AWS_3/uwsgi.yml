@@ -1,0 +1,11 @@
+uwsgi:
+    socket: /uwsgi-sockets/awhile-since.sock
+    master: true
+    processes: 4
+    threads: 2
+    single-interpreter: true
+    chdir: /home/corbe054/awhile-since/
+    wsgi-file: /home/corbe054/awhile-since/AWS_3/wsgi.py
+    virtualenv: /var/env/aws
+    buffer-size: 8192
+    plugin: python35
