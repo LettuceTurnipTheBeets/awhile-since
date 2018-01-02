@@ -5,4 +5,4 @@ Reminder/__pycache__
 Reminder/migrations/__pycache__
 Reminder/templatetags/__pycache__
 .idea
-django_error_logs/
+django-error-logs/
