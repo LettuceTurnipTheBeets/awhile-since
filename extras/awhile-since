@@ -1,7 +1,7 @@
 # located /etc/nginx/sites-available/awhile-since
 server {
     listen 80;
-    server_name awhilesince.com www.awhilesince.com;    
+    server_name www.awhilesince.com;    
 
     access_log /var/log/awhile-since/nginx_access.log;
     error_log /var/log/awhile-since/nginx_error.log;
