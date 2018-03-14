@@ -6,3 +6,4 @@ Reminder/migrations/__pycache__
 Reminder/templatetags/__pycache__
 .idea
 django-error-logs/
+static/
