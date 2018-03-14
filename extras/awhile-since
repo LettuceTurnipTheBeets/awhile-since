@@ -7,7 +7,7 @@ server {
 }
 
 server {
-    listen 443;
+    listen 80;
     server_name www.awhilesince.com;    
 
     access_log /var/log/awhile-since/nginx_access.log;
@@ -27,6 +27,7 @@ server {
         uwsgi_pass      unix:/uwsgi-sockets/awhile-since.sock;
     }    
 
+    listen 443 ssl;
     ssl_certificate /etc/letsencrypt/live/www.awhilesince.com/fullchain.pem; # managed by Certbot
     ssl_certificate_key /etc/letsencrypt/live/www.awhilesince.com/privkey.pem; # managed by Certbot
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
