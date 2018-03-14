@@ -7,7 +7,7 @@
         <title>Awhile Since</title>
         <link rel="stylesheet" href="{% static "css/reminder.css" %}">
         <link rel="shortcut icon" href="{% static "icon/favicon.ico" %}">
-        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="{% static "javascript/jquery-1.11.1.min.js" %}"></script>
         <script src="{% static "javascript/main.js" %}"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
         <script type="text/javascript">
@@ -17,8 +17,8 @@
                 $.event.special.swipe.horizontalDistanceThreshold = 10;
             });
         </script>
-        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+        <script src="{% static "javascript/jquery.mobile-1.4.5.min.js" %}"></script>
+        <link rel="stylesheet" href="{% static "javascript/jquery.mobile-1.4.5.min.css" %}"/>
     </head>
 
     {% block content %}
