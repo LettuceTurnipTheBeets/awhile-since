@@ -6,48 +6,48 @@ import datetime
 from reminder.choices import IMPORTANCE_CHOICES, DATE_CHOICES
 
 
-
-
-
-# Extends the User model and houses user information and settings
 class UserProfile(models.Model):
-    # One UserProfile per User, one User per UserProfile
+    """Extends the User model and adds some additional variables"""
     user = models.OneToOneField(User)
 
-    # The additional attributes we wish to include.
     email_alerts = models.BooleanField(default=True)
     join_date = models.DateTimeField(default=timezone.now)
     score = models.score = models.IntegerField(default=0)
-
-    # App exclusive settings go here
     en_notifications = models.BooleanField(default=True)
 
     def __unicode__(self):
         return self.user.username
 
 
-# Individual task model.  Linked to a user.
 class Task(models.Model):
-    # One User per Task; any number of Tasks per User
+    """Individual task model.  Linked to a user."""
     user = models.ForeignKey(User)
 
-    # Default Settings
     name = models.CharField(max_length=50)
-    created_date = models.DateTimeField(default=timezone.now)  # Not included in the profile, only in the settings
+    created_date = models.DateTimeField(default=timezone.now)  
+    """Not included in the profile, only in the settings"""
     due_date = models.DateTimeField(default=timezone.now)
     last_date = models.DateTimeField(default=timezone.now)
     frequency_int = models.IntegerField(default=1)
     frequency_choice = models.IntegerField(default=1)
-    category = models.IntegerField(default=1)  # 1 = General, 2 = Hygiene/Fitness, 3 = Maintenance, 4 = School/Business, 5 = Social
-    importance = models.IntegerField(default=3, choices=IMPORTANCE_CHOICES) # 1 = Trivial, 2 = Minor, 3 = Moderate, 4 = Significant, 5 = Critical
+    category = models.IntegerField(default=1)
+    """1 = General, 2 = Hygiene/Fitness, 3 = Maintenance, 4 = School/Business,
+       5 = Social
+    """
+    importance = models.IntegerField(default=3, choices=IMPORTANCE_CHOICES)
+    """1 = Trivial, 2 = Minor, 3 = Moderate, 4 = Significant, 5 = Critical"""
     past_due = models.BooleanField(default=True)
     time_delta = models.FloatField(default=0.0)
-    choice = models.IntegerField(default=0)  # 0 = smartTRACK, 1 = date, 2 = frequency
+    choice = models.IntegerField(default=0)
+    """0 = smartTRACK, 1 = date, 2 = frequency"""
     acknowledge_total = models.IntegerField(default=0)
     notified = models.BooleanField(default=False)
 
-    # smartTRACK Settings
-    en_smartTRACK = models.IntegerField(default=0)  # 0 = disabled, 1 = enabled but tracking not ready, 2 = enabled and tracking ready
+    """smartTRACK settings go here"""
+    en_smartTRACK = models.IntegerField(default=0)
+    """0 = disabled, 1 = enabled but tracking not ready,
+       2 = enabled and tracking ready
+    """
     omit_total = models.IntegerField(default=0)
 
     def importance_formatted(self):
@@ -149,8 +149,8 @@ class Task(models.Model):
         return self.name
 
 
-# Task Acknowledge History
 class History(models.Model):
+    """Task Acknowledge History"""
     task = models.ForeignKey(Task)
     acknowledge_date = models.DateTimeField(default=timezone.now)
 
@@ -174,9 +174,8 @@ class History(models.Model):
         return '{}{}{}_{}{}'.format(self.acknowledge_date.year, month, day, hour, minute)
 
 
-# Custom Category
 class Custom(models.Model):
-    # One User per Custom Category; any number of Custom Categories per User
+    """Custom Category""" 
     user = models.ForeignKey(User)
 
     name = models.CharField(max_length=50)
@@ -184,3 +183,4 @@ class Custom(models.Model):
 
     def __str__(self):
         return self.name
+

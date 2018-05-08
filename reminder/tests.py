@@ -4,10 +4,10 @@ import datetime
 from django.utils import timezone
 from .models import UserProfile, Task, History, Custom
 from django.core.urlresolvers import reverse, resolve
-# Create your tests here.
+
 
 class ModelTests(TestCase):
-
+    """Test the models with prepopulated data"""
     def test_importance_formatted(self):
         importance = 1
         importance_task = Task(importance=importance)
@@ -29,50 +29,96 @@ class ModelTests(TestCase):
         importance_task = Task(importance=importance)
         self.assertEqual(importance_task.importance_formatted(), 'Critical')
 
-
-
     def test_frequency_formatted(self):
         choice = 2
         tracking = 0
         integer = 1
         time = 5000000
-        frequency_task = Task(frequency_choice=choice, en_smartTRACK=tracking, frequency_int=integer, time_delta=time)
-        self.assertEqual(frequency_task.frequency_formatted(), 'Every 8 weeks, 1 day, 20 hours')
+        frequency_task = Task(
+            frequency_choice=choice,
+            en_smartTRACK=tracking,
+            frequency_int=integer,
+            time_delta=time
+        )
+        self.assertEqual(
+            frequency_task.frequency_formatted(),
+            'Every 8 weeks, 1 day, 20 hours'
+        )
 
         choice = 1
         tracking = 0
         integer = 1
         time = 500000
-        frequency_task = Task(frequency_choice=choice, en_smartTRACK=tracking, frequency_int=integer, time_delta=time)
-        self.assertEqual(frequency_task.frequency_formatted(), 'Every 5 days, 18 hours')
+        frequency_task = Task(
+            frequency_choice=choice,
+            en_smartTRACK=tracking,
+            frequency_int=integer,
+            time_delta=time
+        )
+        self.assertEqual(
+            frequency_task.frequency_formatted(),
+            'Every 5 days, 18 hours'
+        )
 
         choice = 0
         tracking = 0
         integer = 1
         time = 50000
-        frequency_task = Task(frequency_choice=choice, en_smartTRACK=tracking, frequency_int=integer, time_delta=time)
-        self.assertEqual(frequency_task.frequency_formatted(), 'Every 13 hours')
+        frequency_task = Task(
+            frequency_choice=choice,
+            en_smartTRACK=tracking,
+            frequency_int=integer,
+            time_delta=time
+        )
+        self.assertEqual(
+            frequency_task.frequency_formatted(),
+            'Every 13 hours'
+        )
 
         choice = 2
         tracking = 0
         integer = 1
         time = 1000000
-        frequency_task = Task(frequency_choice=choice, en_smartTRACK=tracking, frequency_int=integer, time_delta=time)
-        self.assertEqual(frequency_task.frequency_formatted(), 'Every 1 week, 4 days, 13 hours')
+        frequency_task = Task(
+            frequency_choice=choice,
+            en_smartTRACK=tracking,
+            frequency_int=integer,
+            time_delta=time
+        )
+        self.assertEqual(
+            frequency_task.frequency_formatted(),
+            'Every 1 week, 4 days, 13 hours'
+        )
 
         choice = 1
         tracking = 0
         integer = 1
         time = 100000
-        frequency_task = Task(frequency_choice=choice, en_smartTRACK=tracking, frequency_int=integer, time_delta=time)
-        self.assertEqual(frequency_task.frequency_formatted(), 'Every 1 day, 3 hours')
+        frequency_task = Task(
+            frequency_choice=choice,
+            en_smartTRACK=tracking,
+            frequency_int=integer,
+            time_delta=time
+        )
+        self.assertEqual(
+            frequency_task.frequency_formatted(),
+            'Every 1 day, 3 hours'
+        )
 
         choice = 0
         tracking = 0
         integer = 1
         time = 10000
-        frequency_task = Task(frequency_choice=choice, en_smartTRACK=tracking, frequency_int=integer, time_delta=time)
-        self.assertEqual(frequency_task.frequency_formatted(), 'Every 2 hours')
+        frequency_task = Task(
+            frequency_choice=choice,
+            en_smartTRACK=tracking,
+            frequency_int=integer,
+            time_delta=time
+        )
+        self.assertEqual(
+            frequency_task.frequency_formatted(),
+            'Every 2 hours'
+        )
 
     def test_choice_formatted(self):
         choice = 0
@@ -111,9 +157,15 @@ class ModelTests(TestCase):
 class TaskViewTests(TestCase):
 
     def test_login(self):
-        response = self.client.post('/login/', {'username': 'TestUser1', 'password': '1111'})
+        response = self.client.post(
+            '/login/',
+            {'username': 'TestUser1', 'password': '1111'}
+        )
         self.assertEqual(response.status_code, 200)
-        response = self.client.post('/login/', {'username': 'failLogin', 'password': 'null'})
+        response = self.client.post(
+            '/login/',
+            {'username': 'failLogin', 'password': 'null'}
+        )
         self.assertEqual(response.status_code, 200)
 
     def test_call_view_denies_anonymous(self):
@@ -123,10 +175,7 @@ class TaskViewTests(TestCase):
         self.assertRedirects(response, '/login/?next=/profile/settings/')
 
     def test_call_view_loads(self):
-        self.client.login(username='user', password='test')  # defined in fixture or with factory in setUp()
+        self.client.login(username='user', password='test')
         response = self.client.get('/profile/')
         self.assertEqual(response.status_code, 302)
-        #self.assertTemplateUsed(response, 'profile.html')
-
-
 
