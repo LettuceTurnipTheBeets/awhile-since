@@ -176,7 +176,6 @@ def acknowledge(request):
             response['score'] = 0
 
         if request.POST.get('type') == 'button':
-            print('Type: button')
             task.past_due = 1
             task.last_date = formatted_time
 
@@ -868,7 +867,6 @@ def user_login(request):
                     # returns HttpResponse("Your Awhile Since account is disabled.")
                     return render(request, 'reminder/login.html', {'feedback': 'Your Awhile Since account is disabled', 'form': form})
             else:
-                # print invalid username and password to the terminal and tell the user
                 return render(request, 'reminder/login.html', {'feedback': 'Invalid login details supplied', 'form': form})
     else:
         form = PasswordForm(initial={'username': '', 'password': ''})
