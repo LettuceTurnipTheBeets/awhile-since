@@ -16,7 +16,10 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Custom',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('id', models.AutoField(primary_key=True,
+                                        serialize=False,
+                                        auto_created=True,
+                                        verbose_name='ID')),
                 ('name', models.CharField(max_length=50)),
                 ('value', models.IntegerField(default=6)),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
@@ -25,22 +28,33 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='History',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
-                ('acknowledge_date', models.DateTimeField(default=django.utils.timezone.now)),
+                ('id', models.AutoField(primary_key=True,
+                                        serialize=False,
+                                        auto_created=True,
+                                        verbose_name='ID')),
+                ('acknowledge_date', models.DateTimeField(
+                    default=django.utils.timezone.now)),
             ],
         ),
         migrations.CreateModel(
             name='Task',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('id', models.AutoField(primary_key=True,
+                                        serialize=False,
+                                        auto_created=True,
+                                        verbose_name='ID')),
                 ('name', models.CharField(max_length=50)),
-                ('created_date', models.DateTimeField(default=django.utils.timezone.now)),
-                ('due_date', models.DateTimeField(default=django.utils.timezone.now)),
-                ('last_date', models.DateTimeField(default=django.utils.timezone.now)),
+                ('created_date', models.DateTimeField(
+                    default=django.utils.timezone.now)),
+                ('due_date', models.DateTimeField(
+                    default=django.utils.timezone.now)),
+                ('last_date', models.DateTimeField(
+                    default=django.utils.timezone.now)),
                 ('frequency_int', models.IntegerField(default=1)),
                 ('frequency_choice', models.IntegerField(default=1)),
                 ('category', models.IntegerField(default=1)),
-                ('importance', models.IntegerField(default=3, choices=[(1, 'Trivial'), (2, 'Minor'), (3, 'Moderate'), (4, 'Significant'), (5, 'Critical')])),
+                ('importance', models.IntegerField(default=3, choices=[
+                 (1, 'Trivial'), (2, 'Minor'), (3, 'Moderate'), (4, 'Significant'), (5, 'Critical')])),
                 ('past_due', models.BooleanField(default=True)),
                 ('time_delta', models.FloatField(default=0.0)),
                 ('choice', models.IntegerField(default=0)),
@@ -53,9 +67,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='UserProfile',
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False, auto_created=True, verbose_name='ID')),
+                ('id', models.AutoField(primary_key=True,
+                                        serialize=False, auto_created=True, verbose_name='ID')),
                 ('email_alerts', models.BooleanField(default=True)),
-                ('join_date', models.DateTimeField(default=django.utils.timezone.now)),
+                ('join_date', models.DateTimeField(
+                    default=django.utils.timezone.now)),
                 ('score', models.IntegerField(default=0)),
                 ('en_notifications', models.BooleanField(default=True)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),

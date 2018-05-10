@@ -42,11 +42,14 @@ def send_warning_email_task():
                         email_task.due_date
                     )
                     message = 'The task was last acknowledged at {}.  Log in to your account to see the task and ' \
-                              'acknowledge it.<nrhttp://www.AwhileSince.com/profile/'.format(email_task.last_acknowledged)
+                              'acknowledge it.<nrhttp://www.AwhileSince.com/profile/'.format(
+                                  email_task.last_acknowledged)
                     from_email = settings.EMAIL_HOST_USER
                     to_list = [user.email, settings.EMAIL_HOST_USER]
 
-                    send_mail(subject, message, from_email, to_list, fail_silently=False)
+                    send_mail(subject, message, from_email,
+                              to_list, fail_silently=False)
 
-                    logger.info("Sent warning email about task: {} to user: {} at address: {}".format(email_task.name, user.name, user.email))
-
+                    logger.info(
+                        "Sent warning email about task: {} to user: {} at address: {}".format(
+                            email_task.name, user.name, user.email))

@@ -153,9 +153,8 @@ class ModelTests(TestCase):
         self.assertEqual(history_date.__str__(), '20140727_1028')
 
 
-
 class TaskViewTests(TestCase):
-
+    """Test the tasks with prepulated data"""
     def test_login(self):
         response = self.client.post(
             '/login/',
@@ -178,4 +177,3 @@ class TaskViewTests(TestCase):
         self.client.login(username='user', password='test')
         response = self.client.get('/profile/')
         self.assertEqual(response.status_code, 302)
-

@@ -6,6 +6,7 @@ def lookup(d, key):
     """Return the value of a dictionary"""
     return d[key]
 
+
 @register.simple_tag()
 def total_count(local, parent, slice):
     """Return the total count of a passed in time value"""
@@ -15,3 +16,4 @@ def total_count(local, parent, slice):
         offset = int(slice[int(parent)-1].split(":")[1]) + int(local)
 
     return '{}'.format(offset)
+

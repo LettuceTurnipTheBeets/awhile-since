@@ -24,7 +24,7 @@ class Task(models.Model):
     user = models.ForeignKey(User)
 
     name = models.CharField(max_length=50)
-    created_date = models.DateTimeField(default=timezone.now)  
+    created_date = models.DateTimeField(default=timezone.now)
     """Not included in the profile, only in the settings"""
     due_date = models.DateTimeField(default=timezone.now)
     last_date = models.DateTimeField(default=timezone.now)
@@ -175,7 +175,7 @@ class History(models.Model):
 
 
 class Custom(models.Model):
-    """Custom Category""" 
+    """Custom Category"""
     user = models.ForeignKey(User)
 
     name = models.CharField(max_length=50)

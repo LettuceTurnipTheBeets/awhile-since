@@ -8,7 +8,8 @@ import pytz
 def smartTRACK(task, new_time):
     """Return the average of the set task time durations"""
     if task.history_set.count() > 0:
-        avg_frequency = (new_time - task.created_date) / task.history_set.count()
+        avg_frequency = (new_time - task.created_date) / \
+            task.history_set.count()
     else:
         avg_frequency = 0
 
@@ -30,11 +31,11 @@ def validate(date, time):
 
     if result != 'default':
         try:
-            date = pytz.utc.localize(datetime.datetime.strptime(date, '%m/%d/%Y'))
+            date = pytz.utc.localize(
+                datetime.datetime.strptime(date, '%m/%d/%Y'))
             if (date + datetime.timedelta(minutes=time)) < timezone.now():
                 result = False
         except ValueError:
             result = False
 
     return result
-
