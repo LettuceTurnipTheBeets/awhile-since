@@ -1,6 +1,6 @@
 # Awhile Since
 
-This repository is for the AWS_3 project.  This is a productivity/scheduling app.
+This app allows for productivity/scheduling capabilities.  In addition to simple scheduling and reminders for repeatable tasks it can give you timeframes and reminders for tasks you've never done before.
 
 ## Features:
  +   Mobile friendly, works well on all screen sizes and device types
