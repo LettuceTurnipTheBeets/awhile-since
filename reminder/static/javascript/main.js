@@ -1,5 +1,5 @@
 // javascript functions
-<!-- global variables -->
+// global variables
 var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 var temp_name;
 var temp_choice;
@@ -14,7 +14,7 @@ var update;
 var remove_warning = -1;
 var remove_alarm = -1;
 
-<!-- format the date (Last Acknowledged Date or Due Date) -->
+// format the date (Last Acknowledged Date or Due Date)
 function formatDate (timeVal) {
     var year = timeVal.getFullYear();
 
@@ -61,7 +61,7 @@ function formatDate (timeVal) {
     return month + ' ' + day + year + ', ' + hour + ':' + minute + ' ' + meridiem;
 }
 
-<!-- parse the number, category, and id from a Link ID -->
+// parse the number, category, and id from a Link ID
 function ParseID (link) {
     var short_id = link.substring(link.indexOf('-') + 1);
     var combo = link.substring(link.indexOf('link') + 4);
@@ -72,15 +72,14 @@ function ParseID (link) {
     this.full_id = link;
 }
 
-<!-- initialize the profile -->
+// initialize the profile
 function profileInit () {
-    //document.getElementById('score').innerHTML = 'Score: ' + score;
     $("[id^='category").find('.ui-collapsible-heading-toggle').addClass('test-set');
 
     getTime();
 }
 
-<!-- get the Time Remaining -->
+// get the Time Remaining
 function getTime () {
     var now = new Date();
 
@@ -91,17 +90,14 @@ function getTime () {
     var t = setTimeout(function(){getTime()}, 1000);
 }
 
-<!-- stats Time Remaining -->
+// stats Time Remaining
 function statsTimeRemaining (num) {
-    //alert('Num: ' + num + '\nDue Date: ' + due_date[num]);
     var now = new Date();
     var timeVal = due_date[num] - now;
     var stat_time = $('#statTime');
-    //alert(timeVal);
 
     // format the time remaining and run the function again
     if (tracking[num]) {
-        //alert('SmartTRACK tracking[' + num + '] = ' + tracking[num]);
         if (stat_time.css('color') == 'rgb(51, 51, 51)') {
             stat_time.css('color', 'green');
         }
@@ -112,7 +108,6 @@ function statsTimeRemaining (num) {
         stat_time.html('&nbsp;SmartTRACK In Progress');
     }
     else if (timeVal < 1000) {
-        //alert('Alarm tracking[' + num + '] = ' + tracking[num]);
         if (stat_time.css('color') == 'rgb(51, 51, 51)') {
             stat_time.css('color', 'rgb(255, 51, 51)');
         }
@@ -123,22 +118,18 @@ function statsTimeRemaining (num) {
         stat_time.html('&nbsp;0:00:00');
     }
     else {
-        //alert('Regular tracking[' + num + '] = ' + tracking[num]);
         stat_time.html('&nbsp;' + formatTimer(timeVal));
     }
 
-    //alert('setTimeout num: ' + num);
     update = setTimeout(function(){statsTimeRemaining(num)}, 1000);
 }
 
-<!-- format the Time Remaining -->
+// format the Time Remaining
 function formatTimeRemaining (timeVal, num) {
     var selector = $("[id^='link" + num + '-' + "']");
     var parse = new ParseID(selector.attr('id'));
 
-    //alert('Task ' + num + ' has timeVal: ' + timeVal + ' and tracking: ' + tracking[num]);
     if (tracking[num] == 0 && timeVal < 1000) {
-        //alert('change task ' + num + ' to red');
         changeColor(num, 2);
 
         if (past_due[num]) {
@@ -169,12 +160,9 @@ function formatTimeRemaining (timeVal, num) {
     }
     else if (tracking[num] == 0) {
         if (timeVal < 86400000) {
-            //alert('change task ' + num + ' to yellow');
-            //alert('ID of warning task: ' + form_id.attr('id'));
             changeColor(num, 1);
         }
         else {
-            //alert('ID of non-warning/alarm tasks: ' + form_id);
             changeColor(num, 0);
 
             if (selector.hasClass('warning')) {
@@ -185,7 +173,6 @@ function formatTimeRemaining (timeVal, num) {
         if (selector.hasClass('alarm')) {
             selector.removeClass('alarm');
         }
-
 
         if (remove_alarm == num) {
             var cat = $('#category' + parse.index).find('.ui-collapsible-heading-toggle');
@@ -214,14 +201,14 @@ function formatTimeRemaining (timeVal, num) {
     }
 }
 
-<!-- set the color to default if SmartTRACK is acknowledged/disabled -->
+// set the color to default if SmartTRACK is acknowledged/disabled
 function defaultColor () {
     if ($('#statTime').css('color') != 'rgb(51, 51, 51)') {
         $('#statTime').css('color', 'rgb(51, 51, 51)');
     }
 }
 
-<!-- format the time remaining -->
+// format the time remaining
 function formatTimer (timeVal) {
     var w = Math.floor(timeVal / 604800000);
     var d = Math.floor((timeVal - (w * 604800000)) / 86400000);
@@ -260,7 +247,7 @@ function formatTimer (timeVal) {
     return w + d + h + ':' + m + ':' + s;
 }
 
-<!-- update the score -->
+// update the score
 function updateScore (num) {
 	score += num;
 	var scoreStr = '' + score;
@@ -273,22 +260,15 @@ function updateScore (num) {
 	document.getElementById('score').innerHTML = 'Score: ' + blank + score;
 }
 
-<!-- change Time Remaining color to yellow if task has < 1 day remaining and red if task is overdue (0 == warning, 1 == alarm) -->
+// change Time Remaining color to yellow if task has < 1 day remaining and red if task is overdue (0 == warning, 1 == alarm)
 function changeColor (num, type) {
     var parse = new ParseID($("[id^='link" + num + '-' + "']").attr('id'));
     var index = $('#category' + parse.index).find('.ui-collapsible-heading-toggle');
 
     if (type == 0) {
-        // No alarm/warning state
-        //alert('Clear State -\nNum: ' + num + '\ntest-set: ' + index.hasClass('test-set') + '\nWarning: ' + index.hasClass('warning-cat') + '\nAlarm: ' + index.hasClass('alarm-cat'));
+        // No Alarm
         if ((index.hasClass('test-set') != true) && (index.hasClass('warning-cat') != true) && (index.hasClass('alarm-cat') != true)) {
-            //alert(index.attr('id'));
             $(index).addClass('test-set');
-            //alert(temp_id);
-
-            /*if (index == 'category0') {
-                alert('this should not display...');
-            }*/
         }
     }
     else if (type == 1) {
@@ -297,16 +277,12 @@ function changeColor (num, type) {
 
         if (index.hasClass('alarm-cat') != true) {
             index.removeClass('test-set').addClass('warning-cat');
-            //alert('Category ' + index + ' has a warning.');
-            //alert('Warning State -\nNum: ' + num + '\ntest-set: ' + index.hasClass('test-set') + '\nWarning: ' + index.hasClass('warning-cat') + '\nAlarm: ' + index.hasClass('alarm-cat'));
         }
     }
     else {
         // Alarm state
-        //alert('Adding alarm for num ' + num);
         $("[id^='link" + num + '-' + "']").addClass('alarm');
         index.removeClass('test-set').addClass('alarm-cat');
-        //alert('Alarm State -\nNum: ' + num + '\ntest-set: ' + index.hasClass('test-set') + '\nWarning: ' + index.hasClass('warning-cat') + '\nAlarm: ' + index.hasClass('alarm-cat'));
     }
 }
 
@@ -337,7 +313,6 @@ function resetForm() {
     document.getElementById('taskForm').reset();
     $('#div_choice_date').hide();
     $('#div_choice_frequency').hide();
-    //$('#id_due_date').removeClass("error");
     $('#modalTitle').html('Add Action');
     $('#taskSave').button('disable').changeButtonText('Add').button('option', 'icon', 'plus').button('refresh');
     $('#created_date').html('');
@@ -380,11 +355,11 @@ function isNumber(e) {
 $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pagecategory, #pagepremade', function() {
     // swipe menu functionality
     $( document ).on( 'swipeleft swiperight', '#pageone, #pageabout, #pagesettings, #pagehome, #pagecategory, #pagepremade', function( e ) {
-        // alert('swipe menu called');
-        // We check if there is no open panel on the page because otherwise
-        // a swipe to close the left panel would also open the right panel (and vice versa).
-        // We do this by checking the data that the framework stores on the page element (panel: open).
-        if ( $.mobile.activePage.jqmData( 'panel' ) !== 'open' ) {
+        /** We check if there is no open panel on the page because otherwise
+         * a swipe to close the left panel would also open the right panel (and vice versa).
+         * We do this by checking the data that the framework stores on the page element (panel: open).
+         */
+        if ( $.mobile.activePage.jqmData( 'panel' ) !== 'open' ) {
             if ( e.type === 'swiperight'  ) {
                 $( '#menu' ).panel( 'open' );
             } else if ( e.type === 'swipeleft' ) {
@@ -521,7 +496,6 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
         clearTimeout(update);
 
         $('#ackSave').button('enable');
-        //$("#ackCancel").button('enable');
 
         // AJAX acknowledge init task
         $.ajax({
@@ -541,7 +515,6 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
                 $('#ackTitle').html("Acknowledge '" + json.name + "'?");
                 $('#ackTime').html('&nbsp;' + formatDate(new Date()));
                 $('#ackId').html(parse.full_id);
-                //$('#ackLast').html(json.last_year);
                 var last = new Date(json.last_year, json.last_month - 1, json.last_day, json.last_hour, json.last_minute - offset);
                 var due = new Date(json.due_year, json.due_month - 1, json.due_day, json.due_hour, json.due_minute - offset);
                 $('#ackLast').html('&nbsp;' + formatDate(last));
@@ -578,7 +551,6 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
                 due_date[parse.num] = new Date(json.due_year, json.due_month - 1, json.due_day, json.due_hour, json.due_minute - offset);
                 past_due[parse.num] = 1;
                 tracking[parse.num] = 0;
-                //defaultColor();
 
                 if (json.warning) {
                     remove_warning = parse.num;
@@ -588,27 +560,15 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
                     remove_alarm = parse.num;
                 }
 
-                // TODO - if the due date changed enough, move it to a new place in the listview list
-                //alert('This has changed: ' + json.changed);
-                //alert('Position: ' + json.position);
-                //alert('Category Num: ' + json.link_number);
-                //alert('Num: ' + parse.num);
-                //alert('Id: ' + json.id);
-                //alert('Name: ' + json.name);
-
                 if (json.changed) {
-                    //alert('position has changed');
                     var position_array = [];
 
                     $("[id*='-" + json.link_number + "-']").each(function (index) {
-                        //alert(index + ': ' + $(this).attr('id'));
                         position_array.push($(this).attr('id'));
                     });
 
                     var temp_pos = json.position;
                     var start_pos = json.position_start;
-
-                    //alert('End Position: ' + temp_pos + '\nStart Position: ' + start_pos);
 
                     var temp_name1 = json.name;
                     var temp_id1 = json.id;
@@ -620,8 +580,6 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
                     var temp_index2 = -1;
                     var length = position_array.length;
 
-                    //$('#ackModal').popup('close');
-                    //alert('before for');
                     for (var i = temp_pos; i >= start_pos; i--) {
                         var parse_now = new ParseID(position_array[i]);
 
@@ -631,8 +589,6 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
                             temp_num2 = parse_now.num;
                             temp_index2 = parse_now.index;
                         }
-
-                        //alert('Name1: ' + temp_name1 + '\nNum1: ' + temp_num1 + '\nIndex1: ' + temp_index1 + '\nID1: ' + temp_id1 + '\nName2: ' + temp_name2 + '\nID2: ' + temp_num2 + '\nIndex2: ' + temp_index2 + temp_id2 + '\nNum2: ');
 
                         $('#' + parse_now.full_id).find('.link-header').html(temp_name1);
                         $('#' + parse_now.full_id).removeClass('warning').removeClass('alarm').attr('id', 'link' + temp_num1 + '-' + temp_index1 + '-' + temp_id1 + 'k');
@@ -775,13 +731,8 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
     });
 
     $('#id_due_date').on('select', function() {
-        //alert('due date changed!');
         checkSave();
     });
-
-    /*$("#id_due_date").datepicker({
-        alert('date picked');
-    });*/
 
     // disable the create/edit save button until all necessary fields have values
     $('#id_name, #id_due_date, #id_frequency_int').bind('keyup focusout', function() {
@@ -840,8 +791,6 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
             data.append('type', 'edit');
         }
 
-        //failhere();
-
         // AJAX edit task
         $.ajax({
             url : 'create_task/',
@@ -852,10 +801,7 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
 
             // successful response
             success : function(json) {
-                //alert('success?');
                 if (json.new_category) {
-                    //alert('time to redirect');
-                    // do your redirect
                     $('#taskModal').popup('close');
                     location.replace('http://localhost/profile/');
                 }
@@ -884,21 +830,13 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
 
                         $('#list' + json.link_number).append(link).listview('refresh');
 
-                        //var position = json.position;
                         var position_array = [];
 
                         $("[id*='-" + json.link_number + "-']").each(function(index) {
-                            //alert(index + ': ' + $(this).attr('id'));
                             position_array.push($(this).attr('id'));
                         });
 
                         var temp_pos = json.position;
-
-                        /*for (var i = 0; i < position_array.length; i++) {
-                            if (position_array[i].includes('-' + json.position + 'k')) {
-                                temp_pos = i;
-                            }
-                        }*/
 
                         var temp_name1 = json.name;
                         var temp_id1 = json.id;
@@ -910,21 +848,15 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
                         var temp_index2 = -1;
                         var length = position_array.length;
 
-                        //alert('before for');
                         for (var i = temp_pos; i < length; i++) {
                             var parse_now = new ParseID(position_array[i]);
 
                             if ((i + 1) < length) {
-                                //alert('Iteration: ' + i);
-                                //var parse_next = new ParseID(position_array[i + 1]);
-                                //alert(parse_now.id);
                                 temp_name2 = ($('#' + parse_now.full_id).find('.link-header').html()).trim();
                                 temp_id2 = parse_now.id;
                                 temp_num2 = parse_now.num;
                                 temp_index2 = parse_now.index;
                             }
-
-                            //alert('Name1: ' + temp_name1 + '\nNum1: ' + temp_num1 + '\nIndex1: ' + temp_index1 + '\nID1: ' + temp_id1 + '\nName2: ' + temp_name2 + '\nID2: ' + temp_num2 + '\nIndex2: ' + temp_index2 + temp_id2 + '\nNum2: ');
 
                             $('#' + parse_now.full_id).find('.link-header').html(temp_name1);
                             $('#' + parse_now.full_id).removeClass('warning').removeClass('alarm').attr('id', 'link' + temp_num1 + '-' + temp_index1 + '-' + temp_id1 + 'k');
@@ -941,8 +873,7 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
                             clearTimeout(update);
 
                             $('#ackSave').button('enable');
-                            //$("#ackCancel").button('enable');
-
+                            
                             // AJAX acknowledge init task
                             $.ajax({
                                 url : 'acknowledge_init/',
@@ -961,7 +892,6 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
                                     $('#ackTitle').html("Acknowledge '" + json.name + "'?");
                                     $('#ackTime').html('&nbsp;' + formatDate(new Date()));
                                     $('#ackId').html(parse.full_id);
-                                    //$('#ackLast').html(json.last_year);
                                     var last = new Date(json.last_year, json.last_month - 1, json.last_day, json.last_hour, json.last_minute - offset);
                                     var due = new Date(json.due_year, json.due_month - 1, json.due_day, json.due_hour, json.due_minute - offset);
                                     $('#ackLast').html('&nbsp;' + formatDate(last));
@@ -1044,36 +974,6 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
                                 }
                             });
                         });
-                        //alert(link);
-                        //alert(num);
-                        //alert(due_date[num]);
-
-                        //document.getElementById('due_date' + num).innerHTML = formatDate(due);
-
-
-                        //document.getElementById('timer' + num).innerHTML = '&lrm;' + formatTimeRemaining(due_date[num] - now, num);
-                        /*var now = new Date();
-                        $('#timer' + num).html('&lrm;' + formatTimeRemaining(due_date[num] - now, num));
-                        $('#due_date' + num).html(formatDate(due_date[num]));
-
-                        //$('#' + full_id).closest('.header').html(json.name);
-                        //$('#' + full_id).find('.inline').html(json.frequency_formatted);
-                        $('#' + full_id).find('.header').html(json.name);
-                        //alert(json.frequency_formatted);
-                        $('#' + full_id).find('.inline').html(json.frequency);*/
-
-                        //var $doc = document.getElementById(json.count + '-' + json.id);
-
-
-                        /*$doc.cells[$en[0]].innerHTML = json.name;
-                         due_date[json.count] = new Date(json.due_year, json.due_month - 1, json.due_day, json.due_hour, json.due_minute - offset);
-                         if (enable[3]) {document.getElementById('due_date' + json.count).innerHTML = formatDate(due_date[json.count]);}
-                         if (enable[4]) {$doc.cells[$en[4]].innerHTML = json.frequency_formatted;}
-                         if (enable[5]) {$doc.cells[$en[5]].innerHTML = json.category;}
-                         if (enable[6]) {$doc.cells[$en[6]].innerHTML = json.importance_formatted;}
-
-                         document.getElementById('timer' + json.count).innerHTML = formatTimeRemaining(due_date[json.count] - new Date(), json.count);*/
-                        //$('#taskModal').popup('close');
                     }
                     else if (json.type == 'edit') {
                         $('#' + parse.full_id).find('.link-header').html(json.name);
@@ -1096,18 +996,14 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
                         }
 
                         if (json.changed) {
-                            //alert('position has changed');
                             var position_array = [];
 
                             $("[id*='-" + json.link_number + "-']").each(function (index) {
-                                //alert(index + ': ' + $(this).attr('id'));
                                 position_array.push($(this).attr('id'));
                             });
 
                             var temp_pos = json.position;
                             var start_pos = json.position_start;
-
-                            alert('End Position: ' + temp_pos + '\nStart Position: ' + start_pos);
 
                             var temp_name1 = json.name;
                             var temp_id1 = json.id;
@@ -1118,9 +1014,6 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
                             var temp_num2 = -1;
                             var temp_index2 = -1;
                             var length = position_array.length;
-
-                            //$('#ackModal').popup('close');
-                            //alert('before for');
 
                             if (start_pos < temp_pos) {
                                 for (var i = temp_pos; i >= start_pos; i--) {
@@ -1133,7 +1026,6 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
                                         temp_index2 = parse_now.index;
                                     }
 
-                                    //alert('Name1: ' + temp_name1 + '\nNum1: ' + temp_num1 + '\nIndex1: ' + temp_index1 + '\nID1: ' + temp_id1 + '\nName2: ' + temp_name2 + '\nID2: ' + temp_num2 + '\nIndex2: ' + temp_index2 + temp_id2 + '\nNum2: ');
                                     $('#' + parse_now.full_id).find('.link-header').html(temp_name1);
                                     $('#' + parse_now.full_id).removeClass('warning').removeClass('alarm').attr('id', 'link' + temp_num1 + '-' + temp_index1 + '-' + temp_id1 + 'k');
 
@@ -1149,16 +1041,11 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
                                     var parse_now = new ParseID(position_array[i]);
 
                                     if ((i + 1) < start_pos) {
-                                        //alert('Iteration: ' + i);
-                                        //var parse_next = new ParseID(position_array[i + 1]);
-                                        //alert(parse_now.id);
                                         temp_name2 = ($('#' + parse_now.full_id).find('.link-header').html()).trim();
                                         temp_id2 = parse_now.id;
                                         temp_num2 = parse_now.num;
                                         temp_index2 = parse_now.index;
                                     }
-
-                                    //alert('Name1: ' + temp_name1 + '\nNum1: ' + temp_num1 + '\nIndex1: ' + temp_index1 + '\nID1: ' + temp_id1 + '\nName2: ' + temp_name2 + '\nID2: ' + temp_num2 + '\nIndex2: ' + temp_index2 + temp_id2 + '\nNum2: ');
 
                                     $('#' + parse_now.full_id).find('.link-header').html(temp_name1);
                                     $('#' + parse_now.full_id).removeClass('warning').removeClass('alarm').attr('id', 'link' + temp_num1 + '-' + temp_index1 + '-' + temp_id1 + 'k');
@@ -1203,20 +1090,20 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
         }
         return cookieValue;
     }
-	
-	// csrf token 
+
+    // csrf token 
     var csrftoken = getCookie('csrftoken');
 
-    /*
-    The functions below will create a header with csrftoken
-    */
+    /**
+     *The functions below will create a header with csrftoken
+     */
 
-	// these HTTP methods do not require CSRF protection
+    // these HTTP methods do not require CSRF protection
     function csrfSafeMethod(method) {
         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
     }
 	
-	// test that a given url is a same-origin URL.  URL could be relative or scheme relative or absolute
+    // test that a given url is a same-origin URL.  URL could be relative or scheme relative or absolute
     function sameOrigin(url) {
         // test that a given url is a same-origin URL
         // url could be relative or scheme relative or absolute
@@ -1231,7 +1118,7 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
             !(/^(\/\/|http:|https:).*/.test(url));
     }
 
-	// send the token to same-origin, relative URLs only.  Send the token only if the method warrants CSRF protection (Using the CSRFToken value acquired earlier)
+    // send the token to same-origin, relative URLs only.  Send the token only if the method warrants CSRF protection (Using the CSRFToken value acquired earlier)
     $.ajaxSetup({
         beforeSend: function(xhr, settings) {
             if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
@@ -1243,7 +1130,6 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
     $('#addContent').bind('click', function () {
         var data = [{'id':1, 'start':'2011-10-29T13:15:00.000+10:00', 'end':'2011-10-29T14:15:00.000+10:00', 'title':'Meeting'}];
 
-        //alert('changed to edit');
         var output = '';
         //iterate through the data using $.each()
         $.each(data, function(index, value){
@@ -1259,10 +1145,6 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
         output = "<li class='task-class'><a id='link8-4-33' href='#'><div class='link-header'>Dynamically added link</div></a></li>";
 
         //now append the buffered output to the listview and either refresh the listview or create it (meaning have jQuery Mobile style the list)
-        //$('#listview').append(output).listview('refresh');//or if the listview has yet to be initialized, use `.trigger('create');` instead of `.listview('refresh');
-
-        //var content = "<div data-role='collapsible' id='set" + 17 + "'><h3>Section " + 17 + "</h3><p>I am the collapsible content in a set so this feels like an accordion. I am hidden by default because I have the 'collapsed' state; you need to expand the header to see me.</p></div>";
-       
         var content = "<div data-role='collapsible' id='set" + 22 + "'><h3>Section " + 22 + "</h3><p>I am the collapsible content in a set so this feels like an accordion. I am hidden by default because I have the 'collapsed' state; you need to expand the header to see me.</p></div>";
         content = "<div id='category14' data-role='collapsible' data-inset='false' data-collapsed-icon='arrow-r' data-expanded-icon='arrow-d'><h1><div class='ui-li-count'>14</div>Dynamically added category</h1></div>";
 
@@ -1273,55 +1155,11 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
         var link2 = "<li class='task-class'><a id='link8-4-33' href='#'><div class='link-header'>Dynamically added link</div></a></li>";
 
         var link3 = "<li class='task-class'>test link</li>";
-        //$('#link3-0-16').remove();
-        //$('#list0').append(output).listview('refresh');
 
         $('#category2').after(cat);
         $('div[data-role=collapsible]').collapsible();
         $('#category25').find('.ui-collapsible-heading-toggle').addClass('test-set');
-        //$('div[data-role=listview]').listview();
-        //$('div[data-role=listview]').listview('refresh');
-
         $('#listview').append(link3).listview('refresh');
-
-        /*$('#list25').append(link3);
-        alert('first');
-        $('#list25').trigger('create');
-        //$('#list25').listview('refresh');
-        $('ul').listview('refresh');
-        $('div[data-role=listview]').listview('refresh');*/
-
-        //$('#category25').append(link);
-        //$('div[data-role=collapsible]').collapsible();
-        //$('div[data-role=listview]').listview();
-
-        /*$('#list25').append(link2).trigger('create');
-        $('div[data-role=listview]').trigger('create');
-        $('div[data-role=listview]').listview();
-        $('div[data-role=listview]').listview('refresh');
-        $('div[data-role=collapsible]').collapsible();*/
-        //alert('done');
-
-        /*$('#6-3-12').find('li').after(output);
-        $('#6-3-12').after(output);
-        $('#6-3-12').closest('li').after(output);
-        $('#list3').append(output).listview( 'refresh' );
-        $('#list3').listview( 'refresh' );
-        alert('list done');
-        //$('#mainSet').append( content ).collapsibleset('refresh');
-        //$('category14').find('.ui-collapsible-heading-toggle').addClass('test-set');
-        //alert('done');
-        $('#addContent').append( content ).collapsibleset( 'refresh' );
-        $('#set17').collapsibleset( 'refresh' );
-        //alert('done0');
-        $('#category10').collapsible( 'refresh' );
-        //alert('first');
-        $('#category11').collapsibleset('refresh');
-        $('#category12').collapsibleset('refresh');
-        alert('done1');
-        $('#category14').collapsibleset('refresh');
-        alert('done2');*/
-        //$('#category2').append( content ).collapsibleset('refresh');
     });
 
     $('#category25').on('click', function () {
@@ -1354,20 +1192,13 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
             alert(index + ': ' + $(this).attr('id'));
         });
 
-        /*$('li').each(function(index) {
-            alert(index + ': ' + $(this).text());
-        });*/
 
         //now append the buffered output to the listview and either refresh the listview or create it (meaning have jQuery Mobile style the list)
-        //$('#listview2').append(link).listview('refresh');//or if the listview has yet to be initialized, use `.trigger('create');` instead of `.listview('refresh');`
-        $('#list25').append(link).trigger('create');//or if the listview has yet to be initialized, use `.trigger('create');` instead of `.listview('refresh');`
+        $('#list25').append(link).trigger('create');  //or if the listview has yet to be initialized, use `.trigger('create');` instead of `.listview('refresh');`
     });
 
 
     $("#refreshUpdateButton").on("click", function(event, ui) {
-        //alert('refresh clicked');
-        //console.log("refreshUpdateButton");
-
         var versions = ["0.3", "0.4", "0.5"];
 
         for (var i=0; i < versions.length; i += 1) {
@@ -1383,9 +1214,6 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
         $('[id^=updateVersionItem]').off("click").on("click", function(event, ui) {
             alert("updateVersion, selected = " + $(this).attr('id'));
         });
-        /*$('#' + 'updateVersionItem-' + (i+3)).off("click").on("click", function(event, ui) {
-            alert("updateVersion, selected = " + $(this).attr('id'));
-        });*/
     });
 
     $('[id^=updateVersionItem]').on("click", function(event, ui) {
@@ -1394,7 +1222,7 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
 
 
     (function($) {
-        /*
+        /**
          * Changes the displayed text for a jquery mobile button.
          * Encapsulates the idiosyncrasies of how jquery re-arranges the DOM
          * to display a button for either an <a> link or <input type='button'>
@@ -1416,5 +1244,4 @@ $(document).on('pageinit', '#pageone, #pageabout, #pagesettings, #pagehome, #pag
             });
         };
     })(jQuery);
-
 });
